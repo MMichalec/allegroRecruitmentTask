@@ -1,13 +1,15 @@
 package com.mmichalec.allegroRecruitmentTask.data
 
-
-data class Repo(
+data class RepoDetails(
     val id: Int,
     val name: String,
     val description: String? = null,
     val created_at: String,
     val updated_at: String? = null,
-){
-    val attributionUrl get() = "https://api.github.com/repos/allegro/$name"
-
+    val url: String,
+    val download_url: String,
+    val language: String,
+    val watchers_count: Int,
+    val subscribers_count: Int,
+) {
 }

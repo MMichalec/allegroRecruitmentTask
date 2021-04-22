@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.mmichalec.allegroRecruitmentTask.data.RepoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +20,7 @@ class RepositoriesViewModel @Inject constructor(
     val repos = currentQuery.switchMap {queryString ->
         repository.getSearchResult(queryString).cachedIn(viewModelScope)
     }
+
 
 
 
@@ -41,5 +43,6 @@ class RepositoriesViewModel @Inject constructor(
 
     companion object {
         private  const val DEFAULT_QUERY = "full_name"
+
     }
 }

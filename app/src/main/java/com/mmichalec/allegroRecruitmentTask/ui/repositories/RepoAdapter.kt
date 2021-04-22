@@ -6,11 +6,12 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.ItemRepositoryBinding
 import java.time.ZonedDateTime
 
-class RepoAdapter : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
+class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
 
 
@@ -32,8 +33,21 @@ class RepoAdapter : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COM
     }
 
     //nested class
-    class RepoViewHolder(private val binding: ItemRepositoryBinding) :
+    inner class RepoViewHolder(private val binding: ItemRepositoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener{
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if(item != null) {
+                        listener.onItemClick(item)
+                    }
+                }
+            }
+        }
+
         fun bind(repo: Repo) {
             binding.apply {
                 textViewName.text = repo.name
@@ -48,6 +62,10 @@ class RepoAdapter : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COM
         }
     }
 
+
+    interface OnItemClickListener{
+        fun onItemClick(repo:Repo)
+    }
 
 
     companion object {

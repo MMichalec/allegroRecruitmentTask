@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Allegro Repos</string>
     <string name="goToApp">Show me Allegro repositories!</string>
+    <string name="noDescription"><![CDATA[<no description>]]></string>
 </resources>

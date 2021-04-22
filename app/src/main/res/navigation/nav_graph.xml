@@ -8,6 +8,23 @@
     <fragment
         android:id="@+id/repositoriesFragment"
         android:name="com.mmichalec.allegroRecruitmentTask.ui.repositories.RepositoriesFragment"
-        android:label="fragment_repo_list"
-        tools:layout="@layout/fragment_repo_list" />
+        android:label="Allegro repositories list"
+        tools:layout="@layout/fragment_repo_list">
+        <action
+            android:id="@+id/action_repositoriesFragment_to_repoDetailsFragment"
+            app:destination="@id/repoDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/repoDetailsFragment"
+        android:name="com.mmichalec.allegroRecruitmentTask.ui.repoDetails.RepoDetailsFragment"
+        android:label="Repository {repoName}"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="repoName"
+            app:argType="string" />
+    </fragment>
 </navigation>

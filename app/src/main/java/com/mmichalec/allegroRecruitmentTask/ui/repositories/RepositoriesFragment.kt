@@ -7,15 +7,20 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.mmichalec.allegroRecruitmentTask.R
+import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.FragmentRepoListBinding
+import com.mmichalec.allegroRecruitmentTask.ui.repoDetails.RepoDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RepositoriesFragment: Fragment(R.layout.fragment_repo_list) {
+class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.OnItemClickListener {
 
     private  val viewModel by viewModels<RepositoriesViewModel>()
 
@@ -27,7 +32,7 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list) {
 
         _binding = FragmentRepoListBinding.bind(view)
 
-        val adapter = RepoAdapter()
+        val adapter = RepoAdapter(this)
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
@@ -36,10 +41,23 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list) {
                 header = RepoLoadStateAdapter{adapter.retry()},
                 footer = RepoLoadStateAdapter{adapter.retry()},
             )
+            buttonRetry.setOnClickListener{
+                adapter.retry()
+            }
         }
 
         viewModel.repos.observe(viewLifecycleOwner){
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            binding.recyclerView.scrollToPosition(0)
+            binding.apply {
+                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
+                textViewError.isVisible = loadState.source.refresh is LoadState.Error
+
+            }
         }
 
         setHasOptionsMenu(true)
@@ -48,16 +66,19 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
+
         inflater.inflate(R.menu.repo_list_menu, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
 
+
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query != null){
                     binding.recyclerView.scrollToPosition(0)
-                    viewModel.searchRepos(query)
+                    //TODO Implement proper search by name/id
                     searchView.clearFocus()
                 }
                 return true
@@ -73,19 +94,18 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list) {
         return when(item.itemId){
             R.id.action_sort_by_name ->{
                 viewModel.setSortByName()
-                binding.recyclerView.scrollToPosition(0)
                 true
             }
 
             R.id.action_sort_by_created_date ->{
                 viewModel.setSortByCreationDate()
-                binding.recyclerView.scrollToPosition(0)
+                //TODO Fix reseting to default position
                 true
             }
 
             R.id.action_sort_by_update_date ->{
+                //TODO try doing sort on recycler view and not by another api call. You already got data
                 viewModel.setSortByLastUpdateDate()
-                binding.recyclerView.scrollToPosition(0)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -96,4 +116,11 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list) {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onItemClick(repo: Repo) {
+        val action = RepositoriesFragmentDirections.actionRepositoriesFragmentToRepoDetailsFragment(repo.name)
+        findNavController().navigate(action)
+    }
+
+
 }
