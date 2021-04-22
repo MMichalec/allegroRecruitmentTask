@@ -1,8 +1,10 @@
 package com.mmichalec.allegroRecruitmentTask.api
 
 import com.mmichalec.allegroRecruitmentTask.data.Repo
+import com.mmichalec.allegroRecruitmentTask.data.RepoDetails
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RepositoriesApi {
@@ -19,4 +21,8 @@ interface RepositoriesApi {
         @Query("per_page") perPage: Int,
 
         ): List<Repo>
+
+
+    @GET ("repos/allegro/{repoName}")
+    suspend fun getRepo(@Path("repoName") type: String): RepoDetails
 }

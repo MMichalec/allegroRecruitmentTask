@@ -20,4 +20,7 @@ class RepoRepository @Inject constructor(private val repositoriesApi: Repositori
             pagingSourceFactory = { RepoPagingSource(repositoriesApi, query)}
         //TODO Try using Flow
         ).liveData
+
+    suspend fun getRepoDetail(repoName:String) = repositoriesApi.getRepo(repoName)
+
 }

@@ -1,5 +1,6 @@
 package com.mmichalec.allegroRecruitmentTask.di
 
+import androidx.fragment.app.Fragment
 import com.mmichalec.allegroRecruitmentTask.api.RepositoriesApi
 import dagger.Module
 import dagger.Provides
@@ -25,4 +26,6 @@ object AppModule {
     @Singleton
     fun provideRepositoriesApi(retrofit: Retrofit): RepositoriesApi =
         retrofit.create(RepositoriesApi::class.java)
+
+
 }
