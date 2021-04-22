@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Allegro Repos</string>
+    <string name="goToApp">Show me Allegro repositories!</string>
 </resources>

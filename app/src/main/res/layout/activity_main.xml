@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,4 +14,13 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:layout_centerInParent="true"-->
+<!--        app:lottie_fileName="titlePageAnimation.json"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_loop="true"-->
+<!--        app:lottie_speed="1"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+</RelativeLayout>
