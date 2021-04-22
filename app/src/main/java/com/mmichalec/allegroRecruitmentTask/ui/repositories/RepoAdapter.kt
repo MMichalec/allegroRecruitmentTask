@@ -13,6 +13,8 @@ import java.time.ZonedDateTime
 class RepoAdapter : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
 
+
+
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
         val currentItem = getItem(position)
 
@@ -46,6 +48,8 @@ class RepoAdapter : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COM
         }
     }
 
+
+
     companion object {
         private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Repo>() {
             override fun areItemsTheSame(oldItem: Repo, newItem: Repo) =
@@ -53,6 +57,7 @@ class RepoAdapter : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COM
 
             override fun areContentsTheSame(oldItem: Repo, newItem: Repo) =
                 oldItem == newItem
+
         }
     }
 }

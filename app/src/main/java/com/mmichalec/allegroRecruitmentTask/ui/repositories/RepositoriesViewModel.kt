@@ -20,8 +20,22 @@ class RepositoriesViewModel @Inject constructor(
         repository.getSearchResult(queryString).cachedIn(viewModelScope)
     }
 
+
+
     fun searchRepos(query: String) {
         currentQuery.value = query
+    }
+
+    fun setSortByName(){
+        currentQuery.value = "full_name"
+    }
+
+    fun setSortByCreationDate(){
+        currentQuery.value = "created"
+    }
+
+    fun setSortByLastUpdateDate(){
+        currentQuery.value = "updated"
     }
 
 
