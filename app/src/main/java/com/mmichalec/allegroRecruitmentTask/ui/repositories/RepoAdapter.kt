@@ -1,7 +1,10 @@
 package com.mmichalec.allegroRecruitmentTask.ui.repositories
 
+import android.app.Application
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -9,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.ItemRepositoryBinding
+import java.security.acl.Owner
 import java.time.ZonedDateTime
 
 class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
 
-
+    lateinit var context: Context;
 
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
         val currentItem = getItem(position)
@@ -27,6 +31,7 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
+        context = parent.context
         val binding =
             ItemRepositoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepoViewHolder(binding)
@@ -50,7 +55,13 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
 
         fun bind(repo: Repo) {
             binding.apply {
+                textViewName.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_right))
+                textViewDescription.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_left))
+                textViewDateOfCreation.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
+                textViewDateOfLastUpdate.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
+
                 textViewName.text = repo.name
+
                 if(repo.description !=null){
                     textViewDescription.text = repo.description
                 }else {
