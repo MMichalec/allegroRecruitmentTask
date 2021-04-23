@@ -1,5 +1,6 @@
 package com.mmichalec.allegroRecruitmentTask.ui.repoDetails
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -22,6 +23,8 @@ class RepoDetailsFragment: Fragment(R.layout.fragment_details) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentDetailsBinding.bind(view)
 
+
+
         binding.apply {
 
 
@@ -30,6 +33,11 @@ class RepoDetailsFragment: Fragment(R.layout.fragment_details) {
             }
 
                viewModel.repoDetails.observe(viewLifecycleOwner){
+
+                   if(textViewUrl.text != null){
+                       progressBar.visibility = View.GONE
+                   }
+
                    textViewUrl.text = it.url
                }
 

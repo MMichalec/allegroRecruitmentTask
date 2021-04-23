@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/repositoriesFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/repositoriesFragment"
@@ -26,5 +26,18 @@
         <argument
             android:name="repoName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.mmichalec.allegroRecruitmentTask.ui.welcome.WelcomeFragment"
+        android:label="Welcome"
+        tools:layout="@layout/welcome_screen">
+        <action
+            android:id="@+id/action_welcomeFragment_to_repositoriesFragment"
+            app:destination="@id/repositoriesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

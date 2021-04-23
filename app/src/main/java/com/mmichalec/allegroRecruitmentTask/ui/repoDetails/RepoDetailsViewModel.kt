@@ -15,11 +15,11 @@ class RepoDetailsViewModel @Inject constructor(
     private val repository: RepoRepository,
     savedStateHandle: SavedStateHandle
 
-):ViewModel() {
+) : ViewModel() {
 
     private val repoDetailsLiveData = MutableLiveData<RepoDetails>()
-    val  repoDetails: LiveData<RepoDetails> = repoDetailsLiveData
-    private  val repoName = savedStateHandle.get<String>("repoName")
+    val repoDetails: LiveData<RepoDetails> = repoDetailsLiveData
+    private val repoName = savedStateHandle.get<String>("repoName")
 
 
     init {

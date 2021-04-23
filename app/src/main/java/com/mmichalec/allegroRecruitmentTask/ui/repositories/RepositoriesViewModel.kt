@@ -21,9 +21,6 @@ class RepositoriesViewModel @Inject constructor(
         repository.getSearchResult(queryString).cachedIn(viewModelScope)
     }
 
-
-
-
     fun searchRepos(query: String) {
         currentQuery.value = query
     }
