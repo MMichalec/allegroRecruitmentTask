@@ -24,16 +24,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.OnItemClickListener {
 
     private  val viewModel by viewModels<RepositoriesViewModel>()
-
     private var _binding: FragmentRepoListBinding? = null
     private  val binding get() = _binding!!
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentRepoListBinding.bind(view)
-
         val adapter = RepoAdapter(this)
+
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
@@ -52,7 +53,8 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.O
         }
 
         adapter.addLoadStateListener { loadState ->
-            binding.recyclerView.scrollToPosition(0)
+
+
             binding.apply {
                 progressBar.isVisible = loadState.source.refresh is LoadState.Loading
                 buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
@@ -79,7 +81,7 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.O
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query != null){
                     binding.recyclerView.scrollToPosition(0)
-                    //TODO Implement proper search by name/id
+
                     searchView.clearFocus()
                 }
                 return true
@@ -100,7 +102,6 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.O
 
             R.id.action_sort_by_created_date ->{
                 viewModel.setSortByCreationDate()
-                //TODO Fix reseting to default position
                 true
             }
 

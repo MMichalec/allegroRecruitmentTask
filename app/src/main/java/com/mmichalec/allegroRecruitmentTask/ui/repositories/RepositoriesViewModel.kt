@@ -16,6 +16,7 @@ class RepositoriesViewModel @Inject constructor(
     private val repository: RepoRepository) :
     ViewModel() {
 
+
     private val currentQuery = MutableLiveData(DEFAULT_QUERY)
     val repos = currentQuery.switchMap {queryString ->
         repository.getSearchResult(queryString).cachedIn(viewModelScope)

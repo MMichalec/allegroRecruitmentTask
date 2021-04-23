@@ -1,32 +1,33 @@
 package com.mmichalec.allegroRecruitmentTask.ui.repositories
 
-import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.paging.PagingData
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.ItemRepositoryBinding
-import java.security.acl.Owner
 import java.time.ZonedDateTime
 
-class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
+class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(
+    REPO_COMPARATOR
+) {
 
 
     lateinit var context: Context;
-
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
         val currentItem = getItem(position)
+
+
 
         if (currentItem != null) {
             holder.bind(currentItem)
         }
-
 
     }
 
@@ -36,6 +37,8 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
             ItemRepositoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepoViewHolder(binding)
     }
+
+
 
     //nested class
     inner class RepoViewHolder(private val binding: ItemRepositoryBinding) :
@@ -55,10 +58,31 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
 
         fun bind(repo: Repo) {
             binding.apply {
-                textViewName.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_right))
-                textViewDescription.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_left))
-                textViewDateOfCreation.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
-                textViewDateOfLastUpdate.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
+
+                textViewName.setAnimation(
+                    AnimationUtils.loadAnimation(
+                        context,
+                        R.anim.slide_in_right
+                    )
+                )
+                textViewDescription.setAnimation(
+                    AnimationUtils.loadAnimation(
+                        context,
+                        R.anim.slide_in_left
+                    )
+                )
+                textViewDateOfCreation.setAnimation(
+                    AnimationUtils.loadAnimation(
+                        context,
+                        R.anim.fade_in
+                    )
+                )
+                textViewDateOfLastUpdate.setAnimation(
+                    AnimationUtils.loadAnimation(
+                        context,
+                        R.anim.fade_in
+                    )
+                )
 
                 textViewName.text = repo.name
 
@@ -67,15 +91,20 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
                 }else {
                     textViewDescription.text = "<no description>"
                 }
-                textViewDateOfCreation.text = "Created: ${ZonedDateTime.parse(repo.created_at).dayOfMonth.toString()} ${ZonedDateTime.parse(repo.created_at).month.toString()} ${ZonedDateTime.parse(repo.created_at).year.toString()}"
-                textViewDateOfLastUpdate.text =  "Updated: ${ZonedDateTime.parse(repo.updated_at).dayOfMonth.toString()} ${ZonedDateTime.parse(repo.updated_at).month.toString()} ${ZonedDateTime.parse(repo.updated_at).year.toString()}"
+                textViewDateOfCreation.text = "Created: ${ZonedDateTime.parse(repo.created_at).dayOfMonth.toString()} ${ZonedDateTime.parse(
+                    repo.created_at
+                ).month.toString()} ${ZonedDateTime.parse(repo.created_at).year.toString()}"
+                textViewDateOfLastUpdate.text =  "Updated: ${ZonedDateTime.parse(repo.updated_at).dayOfMonth.toString()} ${ZonedDateTime.parse(
+                    repo.updated_at
+                ).month.toString()} ${ZonedDateTime.parse(repo.updated_at).year.toString()}"
+
             }
         }
     }
 
 
     interface OnItemClickListener{
-        fun onItemClick(repo:Repo)
+        fun onItemClick(repo: Repo)
     }
 
 
@@ -89,4 +118,5 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
 
         }
     }
+
 }
