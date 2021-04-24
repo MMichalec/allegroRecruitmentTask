@@ -11,4 +11,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="card_bg_color">#BEF6F6F6</color>
     <color name="link">#0000FF</color>
+
+    <color name="details_bg">#29253c</color>
+    <color name="shape_bg">#F368655C</color>
 </resources>

@@ -20,16 +20,19 @@
             <item
                 android:id="@+id/action_sort_by_name"
                 android:title="Sort by name"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
                 />
 
             <item
                 android:id="@+id/action_sort_by_created_date"
                 android:title="Sort by creation date"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
                 />
 
             <item
                 android:id="@+id/action_sort_by_update_date"
                 android:title="Sort by last update date"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
                 />
 
         </menu>

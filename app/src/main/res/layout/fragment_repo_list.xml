@@ -10,16 +10,20 @@
     >
 
     <androidx.recyclerview.widget.RecyclerView
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="4dp"
+        android:layout_margin="2dp"
+        android:scrollbars="vertical"
         tools:listitem="@layout/item_repository" />
 
 
     <ProgressBar
+        android:backgroundTint="@color/allegro_secondary"
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

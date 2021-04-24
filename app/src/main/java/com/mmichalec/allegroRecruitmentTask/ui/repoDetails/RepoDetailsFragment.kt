@@ -48,10 +48,11 @@ class RepoDetailsFragment: Fragment(R.layout.fragment_details) {
                        cardView.visibility = View.GONE
                    }
                    textViewDescription.text = it.description
-                   textViewDateOfCreation.text = "${ZonedDateTime.parse(it.created_at).dayOfMonth.toString()} ${ZonedDateTime.parse(it.created_at).month.toString()} ${ZonedDateTime.parse(it.created_at).year.toString()}"
-                   textViewDateOfLastUpdate.text = "${ZonedDateTime.parse(it.updated_at).dayOfMonth.toString()} ${ZonedDateTime.parse(it.updated_at).month.toString()} ${ZonedDateTime.parse(it.updated_at).year.toString()}"
-                   textViewWatchers.text = "Watchers: ${it.watchers_count}"
-                   textViewSubscribers.text = "Subscribers: ${it.subscribers_count}"
+                   textViewDateOfCreation.text = "Created:\n${ZonedDateTime.parse(it.created_at).dayOfMonth.toString()} ${ZonedDateTime.parse(it.created_at).month.toString()} ${ZonedDateTime.parse(it.created_at).year.toString()}"
+                   textViewDateOfLastUpdate.text = "Last update:\n${ZonedDateTime.parse(it.updated_at).dayOfMonth.toString()} ${ZonedDateTime.parse(it.updated_at).month.toString()} ${ZonedDateTime.parse(it.updated_at).year.toString()}"
+                   textViewWatchers.text = "${it.watchers_count}\nwatchers"
+                   textViewSubscribers.text = "${it.subscribers_count}\nsubscribers"
+                   textViewLanguage.text= it.language
 
                    val url = Uri.parse(it.url)
                    val intent = Intent(Intent.ACTION_VIEW,url)
