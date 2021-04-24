@@ -1,8 +1,12 @@
 package com.mmichalec.allegroRecruitmentTask.data
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "repositories")
 data class Repo(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val description: String? = null,
     val created_at: String,

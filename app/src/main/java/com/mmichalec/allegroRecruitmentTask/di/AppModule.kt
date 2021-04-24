@@ -1,7 +1,10 @@
 package com.mmichalec.allegroRecruitmentTask.di
 
+import android.app.Application
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import com.mmichalec.allegroRecruitmentTask.api.RepositoriesApi
+import com.mmichalec.allegroRecruitmentTask.data.RepoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +30,10 @@ object AppModule {
     fun provideRepositoriesApi(retrofit: Retrofit): RepositoriesApi =
         retrofit.create(RepositoriesApi::class.java)
 
+
+    @Provides
+    @Singleton
+    fun provideDatabase(app:Application) : RepoDatabase =
+        Room.databaseBuilder(app,RepoDatabase::class.java, "repo_database").build()
 
 }

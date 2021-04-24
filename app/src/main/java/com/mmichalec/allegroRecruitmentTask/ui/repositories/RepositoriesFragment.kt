@@ -14,54 +14,45 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.FragmentRepoListBinding
 import com.mmichalec.allegroRecruitmentTask.ui.repoDetails.RepoDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
-class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.OnItemClickListener {
+class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter2.OnItemClickListener {
 
     private  val viewModel by viewModels<RepositoriesViewModel>()
-    private var _binding: FragmentRepoListBinding? = null
-    private  val binding get() = _binding!!
+
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentRepoListBinding.bind(view)
-        val adapter = RepoAdapter(this)
+       val binding = FragmentRepoListBinding.bind(view)
+        //val binding = FragmentRepoListBinding.inflate(layoutInflater)
+        val repoAdapter = RepoAdapter2(this)
 
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.addItemDecoration(DividerItemDecoration(parentFragment?.context, DividerItemDecoration.VERTICAL))
-            recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = RepoLoadStateAdapter{adapter.retry()},
-                footer = RepoLoadStateAdapter{adapter.retry()},
-            )
-            buttonRetry.setOnClickListener{
-                adapter.retry()
+
+            recyclerView.apply {
+                adapter = repoAdapter
+                layoutManager = LinearLayoutManager(this@RepositoriesFragment.context)
+            }
+
+            viewModel.reposits.observe(viewLifecycleOwner) {
+                repoAdapter.submitList(it.data)
             }
         }
 
-        viewModel.repos.observe(viewLifecycleOwner){
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
 
-        adapter.addLoadStateListener { loadState ->
-
-
-            binding.apply {
-                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-                buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
-                textViewError.isVisible = loadState.source.refresh is LoadState.Error
-
-            }
-        }
 
         setHasOptionsMenu(true)
     }
@@ -79,15 +70,15 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.O
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query != null){
-                    binding.recyclerView.scrollToPosition(0)
-
-                    searchView.clearFocus()
-                }
+                searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText != null){
+                    viewModel.searchQuery.value = newText
+
+                }
                 return true
             }
         })
@@ -116,7 +107,7 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter.O
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+
     }
 
     override fun onItemClick(repo: Repo) {

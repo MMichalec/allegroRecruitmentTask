@@ -22,6 +22,8 @@ interface RepositoriesApi {
 
         ): List<Repo>
 
+    @GET("orgs/allegro/repos?per_page=100")
+    suspend fun getReposFromApi(): List<Repo>
 
     @GET ("repos/allegro/{repoName}")
     suspend fun getRepo(@Path("repoName") type: String): RepoDetails
