@@ -1,59 +1,77 @@
 package com.mmichalec.allegroRecruitmentTask.ui.repositories
 
-import android.app.Application
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.FragmentRepoListBinding
-import com.mmichalec.allegroRecruitmentTask.ui.repoDetails.RepoDetailsFragment
+import com.mmichalec.allegroRecruitmentTask.util.NetworkConnection
+import com.mmichalec.allegroRecruitmentTask.util.Resource
+
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
-class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter2.OnItemClickListener {
+class RepositoriesFragment : Fragment(R.layout.fragment_repo_list),
+    RepoAdapter.OnItemClickListener {
 
-    private  val viewModel by viewModels<RepositoriesViewModel>()
-
-
+    private var isConnection = false
+    private val viewModel by viewModels<RepositoriesViewModel>()
+    private var _binding: FragmentRepoListBinding? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       val binding = FragmentRepoListBinding.bind(view)
-        //val binding = FragmentRepoListBinding.inflate(layoutInflater)
-        val repoAdapter = RepoAdapter2(this)
+        val networkConnection = NetworkConnection(activity?.applicationContext!!)
+        networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
+            isConnection = isConnected
+            if (!isConnected) {
+                noNetworkPopup()
+            }
+        })
+
+        val binding = FragmentRepoListBinding.bind(view)
+        _binding = binding
+
+        val repoAdapter = RepoAdapter(this)
 
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
-            recyclerView.addItemDecoration(DividerItemDecoration(parentFragment?.context, DividerItemDecoration.VERTICAL))
+            recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    parentFragment?.context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
 
             recyclerView.apply {
                 adapter = repoAdapter
                 layoutManager = LinearLayoutManager(this@RepositoriesFragment.context)
             }
 
-            viewModel.reposits.observe(viewLifecycleOwner) {
+            viewModel.repositories.observe(viewLifecycleOwner) {
                 repoAdapter.submitList(it.data)
+
+                progressBar.isVisible = it is Resource.Loading && it.data.isNullOrEmpty()
+                textViewError.isVisible = it is Resource.Error && it.data.isNullOrEmpty()
+                textViewError.text = it.error?.localizedMessage
             }
         }
-
-
-
         setHasOptionsMenu(true)
     }
 
@@ -68,14 +86,14 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter2.
 
 
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText != null){
+                if (newText != null) {
                     viewModel.searchQuery.value = newText
 
                 }
@@ -85,20 +103,24 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter2.
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.action_sort_by_name ->{
-                viewModel.setSortByName()
+
+        return when (item.itemId) {
+            R.id.action_sort_by_name -> {
+                viewModel.sortOrder.value = RepositoriesViewModel.SortOrder.BY_NAME
+                Handler().postDelayed({ _binding?.recyclerView?.scrollToPosition(0) }, 300)
                 true
             }
 
-            R.id.action_sort_by_created_date ->{
-                viewModel.setSortByCreationDate()
+            R.id.action_sort_by_created_date -> {
+                viewModel.sortOrder.value = RepositoriesViewModel.SortOrder.BY_CREATION_DATE
+                Handler().postDelayed({ _binding?.recyclerView?.scrollToPosition(0) }, 300)
                 true
             }
 
-            R.id.action_sort_by_update_date ->{
-                //TODO try doing sort on recycler view and not by another api call. You already got data
-                viewModel.setSortByLastUpdateDate()
+            R.id.action_sort_by_update_date -> {
+
+                viewModel.sortOrder.value = RepositoriesViewModel.SortOrder.BY_UPDATE_DATE
+                Handler().postDelayed({ _binding?.recyclerView?.scrollToPosition(0) }, 300)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -111,8 +133,34 @@ class RepositoriesFragment: Fragment(R.layout.fragment_repo_list), RepoAdapter2.
     }
 
     override fun onItemClick(repo: Repo) {
-        val action = RepositoriesFragmentDirections.actionRepositoriesFragmentToRepoDetailsFragment(repo.name)
-        findNavController().navigate(action)
+
+        if (isConnection) {
+            val action =
+                RepositoriesFragmentDirections.actionRepositoriesFragmentToRepoDetailsFragment(
+                    repo.name
+                )
+            findNavController().navigate(action)
+        } else {
+            showInfoDialog("Application is working in offline mode.\n\nYou need online connection to be able to see repository ${repo.name} details.")
+        }
+    }
+
+    private fun showInfoDialog(message: String) {
+        val builder = AlertDialog.Builder(this@RepositoriesFragment.context)
+        builder.setTitle("WARNING")
+        builder.setMessage(message)
+
+        builder.setPositiveButton("Dismiss") { dialogInterface: DialogInterface, i: Int ->
+        }
+        builder.show()
+    }
+
+    private fun noNetworkPopup() {
+        activity?.runOnUiThread(object : Runnable {
+            override fun run() {
+                showInfoDialog("Application is working in an offline mode.\n\nIf this is your first use of the application you will not see any repositories as the data could not be loaded.\n\nIf it's not your first use the application will use cached data to display repositories but the data might be outdated.")
+            }
+        })
     }
 
 

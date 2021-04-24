@@ -1,13 +1,13 @@
 package com.mmichalec.allegroRecruitmentTask.data
 
-import androidx.lifecycle.asFlow
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
-import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 import com.mmichalec.allegroRecruitmentTask.api.RepositoriesApi
+import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepositoriesViewModel
 import com.mmichalec.allegroRecruitmentTask.util.networkBoundResource
-import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,30 +18,23 @@ class RepoRepository @Inject constructor(
 
     private val repoDao = db.repoDao()
 
-    fun getSearchResult(query: String) =
-        Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                maxSize = 100,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { RepoPagingSource(repositoriesApi, query)}
-        //TODO Try using Flow
-        ).liveData
-
     suspend fun getRepoDetail(repoName:String) = repositoriesApi.getRepo(repoName)
 
-    fun getAllRepos(searchQuery: String) = networkBoundResource(
+    fun getAllRepos(searchQuery: String, sortOrder:RepositoriesViewModel.SortOrder) = networkBoundResource(
         query = {
 
-            repoDao.getAllRepos(searchQuery)
+            repoDao.getRepos(searchQuery, sortOrder)
         },
         fetch = {
            repositoriesApi.getReposFromApi()
+
         },
         saveFetchResult = {
-            repoDao.deleteAllRepos()
-            repoDao.insertRepos(it)
+            db.withTransaction {
+                repoDao.deleteAllRepos()
+                repoDao.insertRepos(it)
+            }
+
         }
     )
 

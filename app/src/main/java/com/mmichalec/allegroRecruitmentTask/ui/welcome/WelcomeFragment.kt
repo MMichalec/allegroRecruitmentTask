@@ -27,7 +27,6 @@ class WelcomeFragment: Fragment(R.layout.welcome_screen) {
 
         binding.apply {
             buttonStart.setOnClickListener {
-                    Log.d("test", "moto")
                 val action = WelcomeFragmentDirections.actionWelcomeFragmentToRepositoriesFragment()
                 findNavController().navigate(action)
             }

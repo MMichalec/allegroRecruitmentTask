@@ -2,17 +2,16 @@ package com.mmichalec.allegroRecruitmentTask.util
 
 import kotlinx.coroutines.flow.*
 
-inline fun <ResultType, RequestType>networkBoundResource (
-   crossinline query: () -> Flow<ResultType>,
-   crossinline fetch: suspend () -> RequestType,
-   crossinline saveFetchResult: suspend (RequestType) -> Unit,
-   crossinline shouldFetch: (ResultType) -> Boolean = { true }
+inline fun <ResultType, RequestType> networkBoundResource(
+    crossinline query: () -> Flow<ResultType>,
+    crossinline fetch: suspend () -> RequestType,
+    crossinline saveFetchResult: suspend (RequestType) -> Unit,
+    crossinline shouldFetch: (ResultType) -> Boolean = { true }
 ) = flow {
     val data = query().first()
 
     val flow = if (shouldFetch(data)) {
         emit(Resource.Loading(data))
-
 
         try {
             saveFetchResult(fetch())
@@ -20,8 +19,9 @@ inline fun <ResultType, RequestType>networkBoundResource (
         } catch (throwable: Throwable) {
             query().map { Resource.Error(throwable, it) }
         }
-    }else {
-        query().map {Resource.Success(it)}
+    } else {
+        query().map { Resource.Success(it) }
     }
+
     emitAll(flow)
 }

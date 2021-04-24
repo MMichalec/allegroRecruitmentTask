@@ -11,7 +11,4 @@ data class Repo(
     val description: String? = null,
     val created_at: String,
     val updated_at: String? = null,
-){
-    val attributionUrl get() = "https://api.github.com/repos/allegro/$name"
-
-}
+)

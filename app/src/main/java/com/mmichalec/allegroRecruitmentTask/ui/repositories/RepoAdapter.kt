@@ -4,20 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Filter
-import android.widget.Filterable
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.databinding.ItemRepositoryBinding
 import java.time.ZonedDateTime
 
-class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Repo, RepoAdapter.RepoViewHolder>(
-    REPO_COMPARATOR
-) {
 
+class RepoAdapter(private val listener: RepoAdapter.OnItemClickListener): ListAdapter <Repo, RepoAdapter.RepoViewHolder>(
+    REPO_COMPARATOR) {
 
     lateinit var context: Context;
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
@@ -91,10 +88,12 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
                 }else {
                     textViewDescription.text = "<no description>"
                 }
-                textViewDateOfCreation.text = "Created: ${ZonedDateTime.parse(repo.created_at).dayOfMonth.toString()} ${ZonedDateTime.parse(
+                textViewDateOfCreation.text = "Created: ${ZonedDateTime.parse(repo.created_at).dayOfMonth.toString()} ${
+                    ZonedDateTime.parse(
                     repo.created_at
                 ).month.toString()} ${ZonedDateTime.parse(repo.created_at).year.toString()}"
-                textViewDateOfLastUpdate.text =  "Updated: ${ZonedDateTime.parse(repo.updated_at).dayOfMonth.toString()} ${ZonedDateTime.parse(
+                textViewDateOfLastUpdate.text =  "Updated: ${ZonedDateTime.parse(repo.updated_at).dayOfMonth.toString()} ${
+                    ZonedDateTime.parse(
                     repo.updated_at
                 ).month.toString()} ${ZonedDateTime.parse(repo.updated_at).year.toString()}"
 
@@ -102,11 +101,9 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
         }
     }
 
-
     interface OnItemClickListener{
         fun onItemClick(repo: Repo)
     }
-
 
     companion object {
         private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Repo>() {
@@ -118,5 +115,4 @@ class RepoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter
 
         }
     }
-
 }
