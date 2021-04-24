@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/gradient"
+
     tools:context=".ui.repositories.RepositoriesFragment"
+    android:background="@drawable/background_test_3"
     >
 
     <androidx.recyclerview.widget.RecyclerView
