@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_test_3"
+    android:background="@drawable/background"
     android:fillViewport="true"
     tools:context=".ui.repoDetails.RepoDetailsFragment">
 
@@ -253,7 +253,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="hireMeAnim.json"
+            app:lottie_fileName="anim_hireMe.json"
             app:lottie_loop="true"
             app:lottie_speed="0.5" />
 

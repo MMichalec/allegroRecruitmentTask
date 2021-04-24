@@ -1,21 +1,20 @@
 package com.mmichalec.allegroRecruitmentTask.data
 
-import androidx.paging.PagingData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepositoriesViewModel
+import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepoViewModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RepoDao {
 
-    fun getRepos(query:String, sortOrder: RepositoriesViewModel.SortOrder): Flow<List<Repo>> =
+    fun getRepos(query:String, sortOrder: RepoViewModel.SortOrder): Flow<List<Repo>> =
         when(sortOrder){
-            RepositoriesViewModel.SortOrder.BY_NAME -> getReposSortedByName(query)
-            RepositoriesViewModel.SortOrder.BY_CREATION_DATE -> getReposSortedByDateCreated(query)
-            RepositoriesViewModel.SortOrder.BY_UPDATE_DATE -> getReposSortedByDateUpdated(query)
+            RepoViewModel.SortOrder.BY_NAME -> getReposSortedByName(query)
+            RepoViewModel.SortOrder.BY_CREATION_DATE -> getReposSortedByDateCreated(query)
+            RepoViewModel.SortOrder.BY_UPDATE_DATE -> getReposSortedByDateUpdated(query)
         }
 
     @Query("SELECT * FROM repositories WHERE name LIKE '%' || :searchQuery || '%' ORDER by LOWER(name) ASC, name ")

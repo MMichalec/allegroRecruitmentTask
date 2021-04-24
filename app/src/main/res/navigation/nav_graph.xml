@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/repositoriesFragment"
-        android:name="com.mmichalec.allegroRecruitmentTask.ui.repositories.RepositoriesFragment"
+        android:name="com.mmichalec.allegroRecruitmentTask.ui.repositories.RepoFragment"
         android:label="Allegro repositories list"
         android:fontFamily="@font/alegreya_sans_sc_medium"
         tools:layout="@layout/fragment_repo_list">

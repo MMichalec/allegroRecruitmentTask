@@ -12,7 +12,7 @@ import com.mmichalec.allegroRecruitmentTask.R
 import com.mmichalec.allegroRecruitmentTask.databinding.FragmentDetailsBinding
 import com.mmichalec.allegroRecruitmentTask.databinding.WelcomeScreenBinding
 import com.mmichalec.allegroRecruitmentTask.ui.repoDetails.RepoDetailsViewModel
-import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepositoriesFragmentDirections
+import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepoFragmentDirections
 
 class WelcomeFragment: Fragment(R.layout.welcome_screen) {
 

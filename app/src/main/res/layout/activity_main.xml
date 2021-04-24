@@ -15,13 +15,5 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:layout_centerInParent="true"-->
-<!--        app:lottie_fileName="titlePageAnimation.json"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_speed="1"-->
-<!--        android:layout_height="wrap_content"/>-->
 
 </RelativeLayout>

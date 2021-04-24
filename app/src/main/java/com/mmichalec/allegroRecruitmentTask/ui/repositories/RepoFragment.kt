@@ -25,11 +25,11 @@ import com.mmichalec.allegroRecruitmentTask.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RepositoriesFragment : Fragment(R.layout.fragment_repo_list),
+class RepoFragment : Fragment(R.layout.fragment_repo_list),
     RepoAdapter.OnItemClickListener {
 
     private var isConnection = false
-    private val viewModel by viewModels<RepositoriesViewModel>()
+    private val viewModel by viewModels<RepoViewModel>()
     private var _binding: FragmentRepoListBinding? = null
 
 
@@ -61,7 +61,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repo_list),
 
             recyclerView.apply {
                 adapter = repoAdapter
-                layoutManager = LinearLayoutManager(this@RepositoriesFragment.context)
+                layoutManager = LinearLayoutManager(this@RepoFragment.context)
             }
 
             viewModel.repositories.observe(viewLifecycleOwner) {
@@ -106,20 +106,20 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repo_list),
 
         return when (item.itemId) {
             R.id.action_sort_by_name -> {
-                viewModel.sortOrder.value = RepositoriesViewModel.SortOrder.BY_NAME
+                viewModel.sortOrder.value = RepoViewModel.SortOrder.BY_NAME
                 Handler().postDelayed({ _binding?.recyclerView?.scrollToPosition(0) }, 300)
                 true
             }
 
             R.id.action_sort_by_created_date -> {
-                viewModel.sortOrder.value = RepositoriesViewModel.SortOrder.BY_CREATION_DATE
+                viewModel.sortOrder.value = RepoViewModel.SortOrder.BY_CREATION_DATE
                 Handler().postDelayed({ _binding?.recyclerView?.scrollToPosition(0) }, 300)
                 true
             }
 
             R.id.action_sort_by_update_date -> {
 
-                viewModel.sortOrder.value = RepositoriesViewModel.SortOrder.BY_UPDATE_DATE
+                viewModel.sortOrder.value = RepoViewModel.SortOrder.BY_UPDATE_DATE
                 Handler().postDelayed({ _binding?.recyclerView?.scrollToPosition(0) }, 300)
                 true
             }
@@ -136,7 +136,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repo_list),
 
         if (isConnection) {
             val action =
-                RepositoriesFragmentDirections.actionRepositoriesFragmentToRepoDetailsFragment(
+                RepoFragmentDirections.actionRepositoriesFragmentToRepoDetailsFragment(
                     repo.name
                 )
             findNavController().navigate(action)
@@ -146,7 +146,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repo_list),
     }
 
     private fun showInfoDialog(message: String) {
-        val builder = AlertDialog.Builder(this@RepositoriesFragment.context)
+        val builder = AlertDialog.Builder(this@RepoFragment.context)
         builder.setTitle("WARNING")
         builder.setMessage(message)
 

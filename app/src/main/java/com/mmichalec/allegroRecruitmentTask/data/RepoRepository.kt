@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import androidx.room.withTransaction
 import com.mmichalec.allegroRecruitmentTask.api.RepositoriesApi
-import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepositoriesViewModel
+import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepoViewModel
 import com.mmichalec.allegroRecruitmentTask.util.networkBoundResource
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ class RepoRepository @Inject constructor(
 
     suspend fun getRepoDetail(repoName:String) = repositoriesApi.getRepo(repoName)
 
-    fun getAllRepos(searchQuery: String, sortOrder:RepositoriesViewModel.SortOrder) = networkBoundResource(
+    fun getAllRepos(searchQuery: String, sortOrder:RepoViewModel.SortOrder) = networkBoundResource(
         query = {
 
             repoDao.getRepos(searchQuery, sortOrder)
