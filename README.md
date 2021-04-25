@@ -1,4 +1,4 @@
-<h1 align="center">Allegro Repositories Display with the use MVVM architecture</h1>
+<h1 align="center">Allegro Repositories Display with the use of MVVM architecture</h1>
 
 
 
@@ -13,7 +13,8 @@ Application consists of three screens - welcome screen, repositories list screen
 
 On the repositories list screen clicking any object from the list will show the selected repository details.
 
-![GitHub Logo](/images/s1.jpg width="100" height="400")
+
+![Alt text](/images/s1.jpg width="100" height="400" "Welcome Screen" )
 ![GitHub Logo](/images/s2.jpg width="100" height="400") 
 ![GitHub Logo](/images/s3.jpg width="100" height="400") 
 
