@@ -13,9 +13,9 @@ Application consists of three screens - welcome screen, repositories list screen
 
 On the repositories list screen clicking any object from the list will show the selected repository details.
 
-![GitHub Logo](/images/s1.jpg width="40%" height="40%")
-![GitHub Logo](/images/s2.jpg width="40%" height="40%") 
-![GitHub Logo](/images/s3.jpg width="40%" height="40%") 
+![GitHub Logo](/images/s1.jpg width="100" height="400")
+![GitHub Logo](/images/s2.jpg width="100" height="400") 
+![GitHub Logo](/images/s3.jpg width="100" height="400") 
 
 
 --------------------------------------------------
