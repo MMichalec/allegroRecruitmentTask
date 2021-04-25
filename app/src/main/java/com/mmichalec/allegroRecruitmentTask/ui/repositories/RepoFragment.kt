@@ -70,6 +70,10 @@ class RepoFragment : Fragment(R.layout.fragment_repo_list),
                 progressBar.isVisible = it is Resource.Loading && it.data.isNullOrEmpty()
                 textViewError.isVisible = it is Resource.Error && it.data.isNullOrEmpty()
                 textViewError.text = it.error?.localizedMessage
+
+                if(textViewError.text.contains("403")){
+                    textViewError.text = "${it.error?.localizedMessage} \n There is a possibility that maximum number of API calls from your IP address has been exceeded. For more information check official Githgub REST Api documentation."
+                }
             }
         }
         setHasOptionsMenu(true)
