@@ -5,7 +5,7 @@
 
 ## Using the application
 
-####  Application displays all Github repositories of user Allegro. Implemented in full MVVM Architecture with the use Kotlin language.
+####  Application displays all Github repositories of user Allegro. Implemented in full MVVM Architecture with the use of Kotlin language.
 
 **.apk** file is in root project directory named **application.apk**
 
@@ -43,7 +43,7 @@ On the repositories list screen clicking any object from the list will show the 
 
 ## How application can be developer further
 
-Application could easly be changed to display repositories of any github user. 
+Application could easily be changed to display repositories of any github user. 
 
 ## Challenges I faced during implementing the application
 - MVVM architecture is pretty intimidating at first. There are couple principal changes from MVC/MVP architectures. Proper implementation of MVVM requires to understand the LiveData, Coroutines and Dependency injection. Thankfully tho Android and Kotlin are heavily supported by Google. Both the documentation and learning materials of first-party libraries is superb.
