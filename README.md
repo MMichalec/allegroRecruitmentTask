@@ -7,7 +7,7 @@
 
 ####  Application displays all Github repositories of user Allegro. Implemented in full MVVM Architecture with the use of Kotlin language.
 
-**.apk** file is in root project directory named **application.apk**
+**.apk** file is in root project directory named **application.apk**. To use it with AndroidStudio emulator just drag .apk file on Emulator window.
 
 Application consists of three screens - welcome screen, repositories list screen and repository details.
 
