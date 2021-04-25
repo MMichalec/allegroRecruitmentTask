@@ -92,14 +92,16 @@ class RepoFragment : Fragment(R.layout.fragment_repo_list),
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchQuery.value = query!!
                 searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
-                    viewModel.searchQuery.value = newText
-
+                    if(newText.isEmpty()){
+                        viewModel.searchQuery.value = newText
+                    }
                 }
                 return true
             }
