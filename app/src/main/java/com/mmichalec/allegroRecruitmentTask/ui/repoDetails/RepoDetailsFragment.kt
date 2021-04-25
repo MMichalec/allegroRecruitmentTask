@@ -54,12 +54,12 @@ class RepoDetailsFragment: Fragment(R.layout.fragment_details) {
                    textViewSubscribers.text = "${it.subscribers_count}\nsubscribers"
                    textViewLanguage.text= it.language
 
-                   val url = Uri.parse(it.url)
+                   val url = Uri.parse(it.html_url)
                    val intent = Intent(Intent.ACTION_VIEW,url)
 
                    textViewUrl.apply {
 
-                       text = it.url
+                       text = it.html_url
                        setOnClickListener {
                            startActivity(intent)
                        }

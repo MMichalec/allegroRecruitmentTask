@@ -6,7 +6,7 @@ data class RepoDetails(
     val description: String? = null,
     val created_at: String,
     val updated_at: String? = null,
-    val url: String,
+    val html_url: String,
     val download_url: String,
     val language: String,
     val watchers_count: Int,

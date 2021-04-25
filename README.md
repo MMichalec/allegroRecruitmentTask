@@ -33,12 +33,14 @@ On the repositories list screen clicking any object from the list will show the 
 - **Android navigation component**.
 
 ### Additional features
+- **Basic Tests** - Room and search/sort function unit tests.
 - **Network connection check** - using LiveData application is constantly monitoring the network status. In case of disconnection the proper warning will be displayed. Thanks to use of the caching data application is usable without the network connection
 - **Filtering by repository name**.
 - **Sorting by name/date of creation/last update date**.
 - **Animations and fluid transitions between screens**
-- **Hyperlinks**
+- **Hyperlinks** from repository details to Github and welcome screen text with introduction links to my Linkedin profile.
 - **Views optimized for horizontal displays**
+
 
 
 ## How application can be developer further
@@ -49,6 +51,8 @@ Application could easily be changed to display repositories of any github user.
 - MVVM architecture is pretty intimidating at first. There are couple principal changes from MVC/MVP architectures. Proper implementation of MVVM requires to understand the LiveData, Coroutines and Dependency injection. Thankfully tho Android and Kotlin are heavily supported by Google. Both the documentation and learning materials of first-party libraries is superb.
 
 - Initially I did not plan to use caching and local database but at some during development point I found out about Github REST API calls limit.
+
+- Testing Kotlin flows can be tricky
 
 
 

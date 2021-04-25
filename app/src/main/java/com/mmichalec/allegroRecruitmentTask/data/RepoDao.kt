@@ -1,9 +1,7 @@
 package com.mmichalec.allegroRecruitmentTask.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepoViewModel
 import kotlinx.coroutines.flow.Flow
 
@@ -30,7 +28,15 @@ interface RepoDao {
     suspend fun insertRepos(repos : List<Repo>)
 
     @Query("DELETE FROM  repositories")
-    suspend fun deleteAllRepos(){
+    suspend fun deleteAllRepos(){}
 
-    }
+    @Delete
+    suspend fun deleteRepo(repo:Repo)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRepo(repo:Repo)
+
+    @Query("SELECT * FROM repositories")
+    fun observeAllRepos(): LiveData<List<Repo>>
+
 }

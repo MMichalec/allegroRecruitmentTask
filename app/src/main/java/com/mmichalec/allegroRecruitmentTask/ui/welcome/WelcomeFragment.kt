@@ -1,5 +1,7 @@
 package com.mmichalec.allegroRecruitmentTask.ui.welcome
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -14,7 +16,7 @@ import com.mmichalec.allegroRecruitmentTask.databinding.WelcomeScreenBinding
 import com.mmichalec.allegroRecruitmentTask.ui.repoDetails.RepoDetailsViewModel
 import com.mmichalec.allegroRecruitmentTask.ui.repositories.RepoFragmentDirections
 
-class WelcomeFragment: Fragment(R.layout.welcome_screen) {
+class WelcomeFragment : Fragment(R.layout.welcome_screen) {
 
     private val viewModel: WelcomeViewModel by viewModels()
 
@@ -29,6 +31,14 @@ class WelcomeFragment: Fragment(R.layout.welcome_screen) {
             buttonStart.setOnClickListener {
                 val action = WelcomeFragmentDirections.actionWelcomeFragmentToRepositoriesFragment()
                 findNavController().navigate(action)
+            }
+            val url = Uri.parse("https://www.linkedin.com/in/mateusz-michalec-b2aa7b124/")
+            val intent = Intent(Intent.ACTION_VIEW, url)
+
+            textViewWelcome!!.apply {
+                setOnClickListener{
+                    startActivity(intent)
+                }
             }
         }
 
