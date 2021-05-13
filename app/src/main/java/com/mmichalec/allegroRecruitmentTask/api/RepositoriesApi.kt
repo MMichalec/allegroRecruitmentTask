@@ -22,6 +22,7 @@ interface RepositoriesApi {
 
         ): List<Repo>
 
+    //Some kind of pager solution should be implemented. This solution is not futureproof.
     @GET("orgs/allegro/repos?per_page=100")
     suspend fun getReposFromApi(): List<Repo>
 

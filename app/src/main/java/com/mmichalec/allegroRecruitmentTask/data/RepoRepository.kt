@@ -27,9 +27,13 @@ class RepoRepository @Inject constructor(
         },
         fetch = {
            repositoriesApi.getReposFromApi()
-
         },
+        //shouldFetch should be implemented
+//        shouldFetch = {
+//            System.currentTimeMillis() - time > 60000
+//        },
         saveFetchResult = {
+            //transactions means that all must be executed. If one fails none will happen
             db.withTransaction {
                 repoDao.deleteAllRepos()
                 repoDao.insertRepos(it)
