@@ -13,11 +13,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+//Class containing our dependencies
 
-    @Provides
+@Module
+@InstallIn(SingletonComponent::class) //provides scope for dependency
+//Object keyword for Singleton in KOTLIN
+object AppModule {
+    @Provides // function that provides dependency
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
@@ -35,5 +37,12 @@ object AppModule {
     @Singleton
     fun provideDatabase(app:Application) : RepoDatabase =
         Room.databaseBuilder(app,RepoDatabase::class.java, "repo_database").build()
+
+    //It is highly reccomended to use this dependency to have access to App context in any place in application
+//    @Singleton
+//    @Provides
+//    fun provideAppliaction(@ApplicationContext app: Context) : AllegroRecruitmentTaskApp{
+//        return app as AllegroRecruitmentTaskApp
+//    }
 
 }

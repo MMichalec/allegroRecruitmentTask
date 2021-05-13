@@ -24,7 +24,7 @@ import com.mmichalec.allegroRecruitmentTask.util.Resource
 
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+@AndroidEntryPoint // marking class for dependency injection
 class RepoFragment : Fragment(R.layout.fragment_repo_list),
     RepoAdapter.OnItemClickListener {
 
