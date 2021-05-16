@@ -31,6 +31,9 @@ class RepoViewModel @Inject constructor(
     }.flatMapLatest {(query,sortOrder) ->
         repository.getAllRepos(query,sortOrder)
     }
+    /*turning flow into LiveData will launch a coroutine, then will collect each values from flow and will emit it (set the value of LD from Flow)
+   values coming from flow are db updates. LD also caches values across config changes.
+   */
         val repositories = repoFlow.asLiveData()
 
 

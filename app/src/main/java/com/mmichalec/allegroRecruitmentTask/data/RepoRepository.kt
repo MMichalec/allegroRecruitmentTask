@@ -21,8 +21,8 @@ class RepoRepository @Inject constructor(
     suspend fun getRepoDetail(repoName:String) = repositoriesApi.getRepo(repoName)
 
     fun getAllRepos(searchQuery: String, sortOrder:RepoViewModel.SortOrder) = networkBoundResource(
+        //passing functions as lambda
         query = {
-
             repoDao.getRepos(searchQuery, sortOrder)
         },
         fetch = {
