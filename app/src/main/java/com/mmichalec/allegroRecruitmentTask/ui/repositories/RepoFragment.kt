@@ -23,6 +23,8 @@ import com.mmichalec.allegroRecruitmentTask.util.NetworkConnection
 import com.mmichalec.allegroRecruitmentTask.util.Resource
 
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint // marking class for dependency injection
 class RepoFragment : Fragment(R.layout.fragment_repo_list),
@@ -49,7 +51,6 @@ class RepoFragment : Fragment(R.layout.fragment_repo_list),
 
         val repoAdapter = RepoAdapter(this)
 
-
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.addItemDecoration(
@@ -66,7 +67,8 @@ class RepoFragment : Fragment(R.layout.fragment_repo_list),
 
             viewModel.repositories.observe(viewLifecycleOwner) {
                 repoAdapter.submitList(it.data)
-
+                //TODO: Fix scrolling to position 0. Also get rid of Handlers in onMenuOptionClick
+                //recyclerView.smoothScrollToPosition(0)
                 progressBar.isVisible = it is Resource.Loading && it.data.isNullOrEmpty()
                 textViewError.isVisible = it is Resource.Error && it.data.isNullOrEmpty()
                 textViewError.text = it.error?.localizedMessage
@@ -82,14 +84,12 @@ class RepoFragment : Fragment(R.layout.fragment_repo_list),
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
-
         inflater.inflate(R.menu.repo_list_menu, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
 
-
-
+        //TODO: After fixing shouldFetch in RepoRepository class change searching.
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchQuery.value = query!!

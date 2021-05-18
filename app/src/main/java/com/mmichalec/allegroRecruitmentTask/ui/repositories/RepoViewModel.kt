@@ -3,6 +3,7 @@ package com.mmichalec.allegroRecruitmentTask.ui.repositories
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
+import androidx.recyclerview.widget.RecyclerView
 import com.mmichalec.allegroRecruitmentTask.data.Repo
 import com.mmichalec.allegroRecruitmentTask.data.RepoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,5 +39,4 @@ class RepoViewModel @Inject constructor(
 
 
         enum class SortOrder {BY_NAME, BY_CREATION_DATE, BY_UPDATE_DATE}
-
 }
