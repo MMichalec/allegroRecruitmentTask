@@ -23,8 +23,8 @@ import com.mmichalec.allegroRecruitmentTask.util.NetworkConnection
 import com.mmichalec.allegroRecruitmentTask.util.Resource
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import java.lang.Runnable
 
 @AndroidEntryPoint // marking class for dependency injection
 class RepoFragment : Fragment(R.layout.fragment_repo_list),
@@ -167,6 +167,12 @@ class RepoFragment : Fragment(R.layout.fragment_repo_list),
                 showInfoDialog("Application is working in an offline mode.\n\nIf this is your first use of the application you will not see any repositories as the data could not be loaded.\n\nIf it's not your first use the application will use cached data to display repositories but the data might be outdated.")
             }
         })
+// Better way with the use of coroutine
+//        private fun noNetworkPopup() {
+//            CoroutineScope(Dispatchers.Main).launch {
+//                showInfoDialog("Application is working in an offline mode.\n\nIf this is your first use of the application you will not see any repositories as the data could not be loaded.\n\nIf it's not your first use the application will use cached data to display repositories but the data might be outdated.")
+//            }
+//        }
     }
 
 

@@ -27,8 +27,6 @@ class RepoDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val repoDetails = repoName?.let { repository.getRepoDetail(repoName) }
             repoDetailsLiveData.value = repoDetails!!
-
-
         }
     }
 }
