@@ -8,7 +8,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RepositoriesApi {
-
     companion object {
         const val BASE_URL = "https://api.github.com/"
     }

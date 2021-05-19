@@ -20,12 +20,9 @@ class RepoAdapter(private val listener: RepoAdapter.OnItemClickListener): ListAd
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
         val currentItem = getItem(position)
 
-
-
         if (currentItem != null) {
             holder.bind(currentItem)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
@@ -35,9 +32,7 @@ class RepoAdapter(private val listener: RepoAdapter.OnItemClickListener): ListAd
         return RepoViewHolder(binding)
     }
 
-
-
-    //nested class
+    //nested class - A nested class marked as inner can access the members of its outer class.
     inner class RepoViewHolder(private val binding: ItemRepositoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

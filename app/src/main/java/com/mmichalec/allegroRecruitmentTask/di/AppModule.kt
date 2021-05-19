@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class) //provides scope for dependency
-//Object keyword for Singleton in KOTLIN
+
 object AppModule {
     @Provides // function that provides dependency
     @Singleton
